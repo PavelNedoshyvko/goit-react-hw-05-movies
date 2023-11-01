@@ -82,8 +82,8 @@ export default function MovieDetails() {
 
 			{Object.keys(movie).length !== 0 &&
 				<ul>
-					<li><Link to={`cast`}>Cast</Link></li>
-					<li><Link to={`reviews`}>Reviews</Link></li>
+					<li><Link to={`cast`} state={{ from: location }}>Cast</Link></li>
+					<li><Link to={`reviews`} state={{ from: location }}>Reviews</Link></li>
 				</ul>}
 
 			<Outlet />
