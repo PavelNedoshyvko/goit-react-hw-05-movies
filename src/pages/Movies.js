@@ -1,4 +1,5 @@
 import { fetchMovieByQuery } from "api";
+import { Loader } from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import { SearchForm } from "components/SearchForm/SearchForm";
 import { useEffect, useState } from "react";
@@ -34,6 +35,8 @@ export default function Movies() {
 
 	return (
 		<div>
+			{error && <p>Something went wrong! Try again please</p>}
+			{loading && <Loader />}
 			<SearchForm />
 			{movies.length > 0 && <MoviesList movies={movies} />}
 		</div>
