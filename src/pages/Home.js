@@ -27,14 +27,12 @@ export default function Home() {
 		getAllMovies();
 	}, []);
 
-
 	return (
 		<>
 			{error && <p>Something went wrong! Try again</p>}
 			{loading && <Loader />}
 			<h1>Trending today</h1>
-			<MoviesList movies={movies} />
+			{movies.length > 0 && <MoviesList movies={movies} />}
 		</>
-
 	);
 };

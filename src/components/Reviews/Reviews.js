@@ -31,21 +31,17 @@ export const Reviews = () => {
 	return (
 		<>
 			{error && <p>Something went wrong! Try again please</p>}
-			{
-				review.length > 0 &&
+			{loading && <Loader />}
+			{review.length > 0 ?
 				<ul>
 					{review.map(({ id, author, content }) => (
 						<li key={id}>
-							<h3>Author: {author}</h3>
+							{author && <h3>Author: {author}</h3>}
 							{content && <p>{content}</p>}
 						</li>
 					))}
-				</ul>
+				</ul> : <p>We don't have any reviews for this movie</p>
 			}
-			{loading && <Loader />}
 		</>
-
-
-
 	);
 };

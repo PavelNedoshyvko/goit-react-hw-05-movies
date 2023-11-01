@@ -28,25 +28,26 @@ export const Cast = () => {
 		getMovieCredits();
 	}, [movieId]);
 
-	// const { cast_id, profile_path, name, character } = cast;
-
 	const profileBaseURL = `https://image.tmdb.org/t/p/w300`;
 
 	return (
 		<>
 			{error && <p>Something went wrong! Try again</p>}
 			{loading && <Loader />}
-			{cast.length > 0 &&
+			{cast.length > 0 ?
 				<ul>
 					{cast.map(({ cast_id, profile_path, name, character }) => (
 						<li key={cast_id}>
 							{profile_path ? <img src={profileBaseURL + profile_path} alt={name} /> :
-								<img src={'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'} alt={"no profile available"} />}
-							<p>{name}</p>
-							<p>Character: {character}</p>
+								<img
+									src={'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'}
+									alt={"no profile available"}
+								/>}
+							{name && <p>{name}</p>}
+							{character && <p>Character: {character}</p>}
 						</li>
 					))}
-				</ul>
+				</ul> : <p>We don't have any cast for this movie</p>
 			}
 		</>
 	);
