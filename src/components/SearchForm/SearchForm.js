@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import { FieldInput, SearchBtn } from "./SearchForm.styled";
 
 export const SearchForm = () => {
 
@@ -11,8 +12,8 @@ export const SearchForm = () => {
 	return (
 		<>
 			<form>
-				<input type="text" name="query" />
-				<button type="submit" onClick={handleSubmit}>Search</button>
+				<FieldInput type="text" name="query" />
+				<SearchBtn type="submit" onClick={handleSubmit}>Search</SearchBtn>
 			</form>
 		</>
 	);

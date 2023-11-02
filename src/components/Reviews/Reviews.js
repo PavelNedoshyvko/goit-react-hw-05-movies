@@ -2,6 +2,7 @@ import { fetchMovieReviews } from "api";
 import { Loader } from "components/Loader/Loader";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { NoReviews, ReviewAuthor, ReviewContent, ReviewsWrap } from "./Reviews.styled";
 
 export const Reviews = () => {
 
@@ -33,14 +34,14 @@ export const Reviews = () => {
 			{error && <p>Something went wrong! Try again please</p>}
 			{loading && <Loader />}
 			{review.length > 0 ?
-				<ul>
+				<ReviewsWrap>
 					{review.map(({ id, author, content }) => (
 						<li key={id}>
-							{author && <h3>Author: {author}</h3>}
-							{content && <p>{content}</p>}
+							{author && <ReviewAuthor>Author: {author}</ReviewAuthor>}
+							{content && <ReviewContent>{content}</ReviewContent>}
 						</li>
 					))}
-				</ul> : <p>We don't have any reviews for this movie</p>
+				</ReviewsWrap> : <NoReviews>We don't have any reviews for this movie</NoReviews>
 			}
 		</>
 	);

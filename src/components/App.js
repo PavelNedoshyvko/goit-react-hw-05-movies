@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { Cast } from "./Cast/Cast";
 import { Reviews } from "./Reviews/Reviews";
 import { Layout } from "./Layout/Layout";
+import NotFoundPage from "pages/NotFoundPage";
 
 export const App = () => {
 	return (
@@ -17,6 +18,7 @@ export const App = () => {
 					<Route path="cast" element={<Cast />} />
 					<Route path="reviews" element={<Reviews />} />
 				</Route>
+				<Route path="*" element={<NotFoundPage />} />
 			</Route>
 		</Routes >
 

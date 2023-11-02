@@ -3,6 +3,7 @@ import { Loader } from "components/Loader/Loader";
 import { MoviesList } from "components/MoviesList/MoviesList";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Title } from "./Home.styled";
 
 
 export default function Home() {
@@ -31,7 +32,7 @@ export default function Home() {
 		<>
 			{error && <p>Something went wrong! Try again</p>}
 			{loading && <Loader />}
-			<h1>Trending today</h1>
+			<Title>Trending today</Title>
 			{movies.length > 0 && <MoviesList movies={movies} />}
 		</>
 	);

@@ -2,7 +2,9 @@ import { fetchMovieDetails } from "api";
 import { Loader } from "components/Loader/Loader";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { AddInfo, AddInfoLink, AddInfoWrap, BackLink, GenresText, GenresTitle, MovieTitle, MovieWrap, OverviewText, OverviewTitle, UserScore } from "./MovieDetails.styled";
 
 export default function MovieDetails() {
 
@@ -34,57 +36,77 @@ export default function MovieDetails() {
 
 	const { poster_path, title, release_date, overview, genres, vote_average } = movie;
 
-	const posterBaseURL = `https://image.tmdb.org/t/p/w500`;
+	const year = new Date(release_date).getFullYear();
+
+	const userScore = Math.round(vote_average * 10) + '%';
+
+	const posterBaseURL = `https://image.tmdb.org/t/p/w400`;
 
 	return (
 		<>
 
 			{loading && <Loader />}
-			<Link to={backLink} >Go back</Link >
+
+			<BackLink to={backLink} ><BiArrowBack /> Go back</BackLink >
 
 			{error && <p>Something went wrong! Try again please</p>}
 
-			{Object.keys(movie).length !== 0 && title ?
-				<h2>{title}</h2> :
-				Object.keys(movie).length !== 0 &&
-				<p>We don't have any title for this movie</p>}
+			<MovieWrap>
+				{Object.keys(movie).length !== 0 && poster_path ?
+					<img src={posterBaseURL + poster_path} alt={overview} /> :
+					Object.keys(movie).length !== 0 &&
+					<img
+						src={'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'}
+						alt={"no poster available"}
+					/>
+				}
 
-			{Object.keys(movie).length !== 0 && release_date ?
-				<p>{release_date}</p> :
-				Object.keys(movie).length !== 0 &&
-				<p>We don't have any release_date for this movie</p>}
+				<div>
+					{Object.keys(movie).length !== 0 && title ?
+						<MovieTitle>{title}
+							({Object.keys(movie).length !== 0 && release_date ?
+								year :
+								Object.keys(movie).length !== 0 &&
+								<p>We don't have any release_date for this movie</p>})</MovieTitle> :
+						Object.keys(movie).length !== 0 &&
+						<p>We don't have any title for this movie</p>}
 
-			{Object.keys(movie).length !== 0 && vote_average ?
-				<p>{vote_average}</p> :
-				Object.keys(movie).length !== 0 &&
-				<p>We don't have any vote_average for this movie</p>}
 
-			{Object.keys(movie).length !== 0 && overview ?
-				<p>{overview}</p> :
-				Object.keys(movie).length !== 0 &&
-				<p>We don't have any overview for this movie</p>}
+					{Object.keys(movie).length !== 0 && vote_average ?
+						<UserScore>User Score: {userScore}</UserScore> :
+						Object.keys(movie).length !== 0 &&
+						<p>We don't have any vote_average for this movie</p>}
 
-			{Object.keys(movie).length !== 0 && genres ?
-				<p>{genres.map(({ name }) => name)}</p> :
-				Object.keys(movie).length !== 0 &&
-				<p>We don't have any genres for this movie</p>}
 
-			{Object.keys(movie).length !== 0 && poster_path ?
-				<img src={posterBaseURL + poster_path} alt={overview} /> :
-				Object.keys(movie).length !== 0 &&
-				<img
-					src={'https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png'}
-					alt={"no poster available"}
-				/>
-			}
+					{Object.keys(movie).length !== 0 && overview ?
+						<>
+							<OverviewTitle>Overview</OverviewTitle>
+							<OverviewText>{overview}</OverviewText>
+						</> :
+						Object.keys(movie).length !== 0 &&
+						<p>We don't have any overview for this movie</p>}
 
-			{Object.keys(movie).length !== 0 && <p>Additional information</p>}
 
-			{Object.keys(movie).length !== 0 &&
-				<ul>
-					<li><Link to={`cast`} state={{ from: location }}>Cast</Link></li>
-					<li><Link to={`reviews`} state={{ from: location }}>Reviews</Link></li>
-				</ul>}
+					{Object.keys(movie).length !== 0 && genres ?
+						<>
+							<GenresTitle>Genres</GenresTitle>
+							{genres.map(({ id, name }) => <GenresText key={id}>{name} </GenresText>)}
+						</>
+						:
+						Object.keys(movie).length !== 0 &&
+						<p>We don't have any genres for this movie</p>}
+				</div>
+			</MovieWrap>
+
+			<AddInfoWrap>
+				{Object.keys(movie).length !== 0 && <AddInfo>Additional information:</AddInfo>}
+
+				{Object.keys(movie).length !== 0 &&
+					<ul>
+						<li><AddInfoLink to={`cast`} state={{ from: location }}>Cast</AddInfoLink></li>
+						<li><AddInfoLink to={`reviews`} state={{ from: location }}>Reviews</AddInfoLink></li>
+					</ul>}
+			</AddInfoWrap>
 
 			<Outlet />
 
