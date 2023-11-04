@@ -1,6 +1,6 @@
 import { fetchMovieDetails } from "api";
 import { Loader } from "components/Loader/Loader";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
@@ -31,8 +31,15 @@ export default function MovieDetails() {
 		getMovieDetails();
 	}, [movieId]);
 
+
+	// const backLinkRef = useRef();
+
 	const location = useLocation();
-	const backLink = location.state?.from ?? '/';
+	const backLinkRef = useRef(location.state?.from ?? '/')
+
+	// useEffect(() => {
+	// 	backLinkRef.current = backLink;
+	// }, [backLink]);
 
 	const { poster_path, title, release_date, overview, genres, vote_average } = movie;
 
@@ -47,7 +54,7 @@ export default function MovieDetails() {
 
 			{loading && <Loader />}
 
-			<BackLink to={backLink} ><BiArrowBack /> Go back</BackLink >
+			<BackLink to={backLinkRef.current}><BiArrowBack /> Go back</BackLink >
 
 			{error && <p>Something went wrong! Try again please</p>}
 
@@ -103,8 +110,8 @@ export default function MovieDetails() {
 
 				{Object.keys(movie).length !== 0 &&
 					<ul>
-						<li><AddInfoLink to={`cast`} state={{ from: location }}>Cast</AddInfoLink></li>
-						<li><AddInfoLink to={`reviews`} state={{ from: location }}>Reviews</AddInfoLink></li>
+						<li><AddInfoLink to={`cast`}>Cast</AddInfoLink></li>
+						<li><AddInfoLink to={`reviews`}>Reviews</AddInfoLink></li>
 					</ul>}
 			</AddInfoWrap>
 
