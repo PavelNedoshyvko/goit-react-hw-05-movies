@@ -32,14 +32,8 @@ export default function MovieDetails() {
 	}, [movieId]);
 
 
-	// const backLinkRef = useRef();
-
 	const location = useLocation();
-	const backLinkRef = useRef(location.state?.from ?? '/')
-
-	// useEffect(() => {
-	// 	backLinkRef.current = backLink;
-	// }, [backLink]);
+	const backLinkRef = useRef(location.state?.from ?? '/');
 
 	const { poster_path, title, release_date, overview, genres, vote_average } = movie;
 
